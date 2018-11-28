@@ -28,7 +28,7 @@ class CheckRole
         };
         
         //error reporting
-        $saveCheckString = preg_replace(['/\|/', '/\!/', '/\&/'], [" OR "," not:", " AND "], $saveCheckString);
+        $saveCheckString = preg_replace(['/\|/', '/\!/', '/\&/'], [" OR "," NOT:", " AND "], $saveCheckString);
         Session::flash('error', "role check failed, access denied. Roles $saveCheckString required");
         return redirect('/home');
 
