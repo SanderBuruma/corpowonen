@@ -3,28 +3,15 @@
 @section('title', '| Admin User Index')
 
 @section('header')
-<style>
-button {
-	all: unset;
-	color: var(--main-color-dark);
-	cursor: pointer;
-	background-color: var(--main-color-light);
-	border-radius: 3rem;
-	padding: 0 4px;
-	cursor: pointer;
-	transition: color 0.2s, background-color 0.2s;
-}
-button:hover,
-button:active {
-	background-color: var(--main-color-dark);
-	color: var(--main-color-light);
-}
-</style>
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 @endsection
 
 @section('content')
 <div class="row">
 	<div class="col-md-10 offset-md-1">
+		<div class="paginate-bar">
+			<a id="paginate-left" href="#">◀</a><input type="text" id="paginate-number" width="20" value="1"><a id="paginate-right" href="#">▶</a>
+		</div>
 		<table class="table">
 			<thead>
 				<th>#</th>
@@ -83,6 +70,24 @@ $(document).ready(function(){
 			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
 		}
 	});
+
+	$('#paginate-left')[0].onclick = function(){
+		let pagNr = $('#paginate-number');
+		pagNr.val((parseInt(pagNr.val())-1)||1);
+		refreshIndex();
+	}
+	$('#paginate-right')[0].onclick = function(){
+		let pagNr = $('#paginate-number');
+		pagNr.val(parseInt(pagNr.val())+1);
+		refreshIndex();
+	}
+
+	$('#paginate-number')[0].onkeydown = function(e) {
+		if (e.keyCode == 13){
+			e.preventDefault();
+			refreshIndex();
+		}
+	};
 	
 	$('#select-roles').select2({
     placeholder: "Select a state"
@@ -134,8 +139,9 @@ function clickEdit (e) {
 }
 
 function refreshIndex () {
+	let pageNr = $('#paginate-number')[0].value;
 	$.ajax({
-		url: '/adminajax',
+		url: `/adminajax?page=${pageNr}`,
 		success: function (result) {
 
 			users = result;
