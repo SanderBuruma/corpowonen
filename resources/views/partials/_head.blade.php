@@ -22,5 +22,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 @yield('header')
-<title>Default Laravel @yield('title')</title>
+<title>Corpowonen @yield('title')</title>
 </head>
