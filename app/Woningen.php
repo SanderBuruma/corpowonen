@@ -5,9 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 
-class Role extends Model
+class Woningen extends Model
 {
-    public function users(){
+    public function users()
+    {
         return $this->hasOne('App\Bronnen');
     }
 }
